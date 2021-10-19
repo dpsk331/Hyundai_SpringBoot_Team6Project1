@@ -1,6 +1,5 @@
 package com.mycompany.webapp.controller;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SecurityController {
 	
 	@RequestMapping("/content")
-	public String content(Authentication authentication) {
+	public String content() {
 		log.info("Run");
 
 		return "security/content";
