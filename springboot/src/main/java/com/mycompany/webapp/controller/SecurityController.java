@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SecurityController {
 	
 	@RequestMapping("/content")
-	public String content(Authentication authentication) {
+	public String content() {
 		log.info("Run");
 
 		return "security/content";
