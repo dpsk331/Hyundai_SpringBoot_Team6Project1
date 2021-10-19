@@ -23,7 +23,6 @@
               <div>User: [[${#authentication.principal.username}]]</div>
               <div>Roles: [[${#authentication.authorities}]]</div>
               <div>Roles: [[${#authentication.principal.authorities}]]</div>
-              <div>Email: [[${#authentication.principal.useremail}]]</div>
               <hr />
               <div>
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
