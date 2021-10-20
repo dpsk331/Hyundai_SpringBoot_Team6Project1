@@ -10,7 +10,7 @@
 	</insert>
 	
 	<select id="selectByMid" parameterType="string" resultType="member">
-		SELECT mid, mname, mpassword, menabled, mrole, memail
+		SELECT *
 		FROM member
 		WHERE mid=#{mid}
 	</select>

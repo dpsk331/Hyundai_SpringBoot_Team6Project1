@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <th:block th:replace="~{common/layout::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+	 <div class="d-flex justify-content-center">
+	   <div class="col-8">
+	     [[${ordereditems}]]
+         <hr/>
+         [[${totalnumber}]]
+         <hr/>
+         [[${totalprice}]]
+         <hr/>
+         [[${orderMember}]]
+         <hr/>
+         [[${order}]]
+	   </div>
+	 </div>  
+   
+    </th:block>
+  </th:block>
+  
+</html>

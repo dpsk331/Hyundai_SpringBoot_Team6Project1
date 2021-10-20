@@ -17,7 +17,7 @@ public class HomeController {
 		
 		log.info("Run");
 		
-		return "home";
+		return "main";
 	}
 	
 }
