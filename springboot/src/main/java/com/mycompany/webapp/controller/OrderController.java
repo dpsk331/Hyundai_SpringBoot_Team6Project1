@@ -51,20 +51,43 @@ public class OrderController {
 
 	// 장바구니에서 선택한 상품 주문하기
 	@RequestMapping("/orderPage")
+//	public String orderPage(
+//			@RequestParam(value="orderPcode") ArrayList<String> orderPcode,
+//			@RequestParam(value="orderPimage1") ArrayList<String> orderPimage1,
+//			@RequestParam(value="orderPcolorimage") ArrayList<String> orderPcolorimage,
+//			@RequestParam(value="orderPbrand") ArrayList<String> orderPbrand,
+//			@RequestParam(value="orderPname") ArrayList<String> orderPname,
+//			@RequestParam(value="orderPcolor") ArrayList<String> orderPcolor,
+//			@RequestParam(value="orderPsize") ArrayList<String> orderPsize,
+//			@RequestParam(value="orderPprice") ArrayList<Integer> orderPprice,
+//			@RequestParam(value="orderPquantity") ArrayList<Integer> orderPquantity,
+//			@RequestParam(value="isSelected") ArrayList<Integer> isSelected, //0:선택x, 1:선택
 	public String orderPage(
-			@RequestParam(value="orderPcode") ArrayList<String> orderPcode,
-			@RequestParam(value="orderPimage1") ArrayList<String> orderPimage1,
-			@RequestParam(value="orderPcolorimage") ArrayList<String> orderPcolorimage,
-			@RequestParam(value="orderPbrand") ArrayList<String> orderPbrand,
-			@RequestParam(value="orderPname") ArrayList<String> orderPname,
-			@RequestParam(value="orderPcolor") ArrayList<String> orderPcolor,
-			@RequestParam(value="orderPsize") ArrayList<String> orderPsize,
-			@RequestParam(value="orderPprice") ArrayList<Integer> orderPprice,
-			@RequestParam(value="orderPquantity") ArrayList<Integer> orderPquantity,
-			@RequestParam(value="isSelected") ArrayList<Integer> isSelected, //0:선택x, 1:선택
 			Model model,
 			HttpServletResponse response) throws Exception {
 		log.info("Run order/orderPage");
+		
+		//테스트
+		ArrayList<String> orderPcode = new ArrayList<>();
+		orderPcode.add("CM2B0KCD230W");
+		ArrayList<String> orderPimage1 = new ArrayList<>();
+		orderPimage1.add("http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_W01.jpg/dims/resize/684x1032/");
+		ArrayList<String> orderPcolorimage = new ArrayList<>();
+		orderPcolorimage.add("http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_C01.jpg");
+		ArrayList<String> orderPbrand = new ArrayList<>();
+		orderPbrand.add("the CASHMERE");
+		ArrayList<String> orderPname = new ArrayList<>();
+		orderPname.add("캐시미어 크롭 니트 가디건");
+		ArrayList<String> orderPcolor = new ArrayList<>();
+		orderPcolor.add("PK");
+		ArrayList<String> orderPsize = new ArrayList<>();
+		orderPsize.add("85");
+		ArrayList<Integer> orderPprice = new ArrayList<>();
+		orderPprice.add(495000);
+		ArrayList<Integer> orderPquantity = new ArrayList<>();
+		orderPquantity.add(1);
+		ArrayList<Integer> isSelected = new ArrayList<>();
+		isSelected.add(1);
 
 		//mid 정보 가져오기
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -72,6 +95,9 @@ public class OrderController {
 
 		// 장바구니에서 선택한 상품 데이터를 상품 주문 페이지로 전달
 		ArrayList<CartitemJoinProduct> cartitemJoinProduct = new ArrayList<CartitemJoinProduct>();
+		
+		int totalPquantity = 0; //총 수량
+		int totalPrice = 0; //총 가격
 				
 		for(int i=0; i<orderPcode.size(); i++) {
 			if(isSelected.get(i) == 1) {
@@ -79,6 +105,9 @@ public class OrderController {
 				if(orderPquantity.get(i) > stock) {
 					throw new OutOfStockExceptionHandler(orderPname.get(i) + " 제품의 재고가 부족합니다.");
 				} else {
+					totalPquantity += orderPquantity.get(i);
+					totalPrice += (orderPprice.get(i) * orderPquantity.get(i));
+					
 					cartitemJoinProduct.add(new CartitemJoinProduct(
 							orderPcode.get(i), orderPimage1.get(i), orderPcolorimage.get(i), orderPbrand.get(i), 
 							orderPname.get(i), orderPcolor.get(i), orderPsize.get(i), orderPprice.get(i), orderPquantity.get(i)));
@@ -86,6 +115,8 @@ public class OrderController {
 			}
 		}
 		model.addAttribute("orderProducts", cartitemJoinProduct);
+		model.addAttribute("totalPquantity", totalPquantity);
+		model.addAttribute("totalPrice", totalPrice);
 
 		// 주문자 정보(Member Table)에서 가져와서 주문자 정보와 배송지 정보로 전달
 		Member orderMember = memberService.selectByMid(mid);
