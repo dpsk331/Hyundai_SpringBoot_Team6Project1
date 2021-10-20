@@ -5,14 +5,15 @@
   <th:block th:replace="~{common/layout::setContent(~{this::content})}">
     <th:block th:fragment="content">
     
-      <div class="card m-2">
-        <div class="card-header">
-          Home
-        </div>
-        <div class="card-body">
-          [[${productArray}]]
-        </div>
-      </div>
+	 <div class="d-flex justify-content-center">
+	   <div class="col-8">
+	     [[${orderedList}]]
+         <hr/>
+         [[${member}]]
+         <hr/>
+         [[${couponlist}]]
+	   </div>
+	 </div>
       
     </th:block>
   </th:block>

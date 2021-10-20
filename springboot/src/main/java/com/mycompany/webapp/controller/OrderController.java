@@ -134,7 +134,8 @@ public class OrderController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String mid = authentication.getName();
 		
-		String oid = session.getAttribute("oid").toString();
+//		String oid = session.getAttribute("oid").toString();
+		String oid = "user1633598522169";
 		
 		List<Orderitem> orders = orderService.selectByOid(oid);
 		

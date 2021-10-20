@@ -29,14 +29,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/security/loginForm") 		//default: /login (GET)
 			.loginProcessingUrl("/login")	  		//default: /login (POST)
 			.failureUrl("/security/loginError")		//default: /login?error
-			.defaultSuccessUrl("/security/content")
+			.defaultSuccessUrl("/")
 			.usernameParameter("mid")				//default: username
 			.passwordParameter("mpassword");		//default: password
 		
 		//로그아웃 설정
 		http.logout()
 			.logoutUrl("/logout")					//defualt: /logout
-			.logoutSuccessUrl("/security/content");
+			.logoutSuccessUrl("/");
 		
 		//URL 권한 설정
 		http.authorizeRequests()
