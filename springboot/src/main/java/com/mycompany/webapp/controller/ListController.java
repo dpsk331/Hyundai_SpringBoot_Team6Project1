@@ -48,6 +48,7 @@ public class ListController {
 	@PostMapping("/put")
 	public String putIntoCart(String pcode, String color, String size, int quantity,int price) {
 		logger.info("실행");
+		logger.info(pcode + " "+color+" "+size+" "+quantity+" "+price );
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String mid = authentication.getName();
 		logger.info(mid);
