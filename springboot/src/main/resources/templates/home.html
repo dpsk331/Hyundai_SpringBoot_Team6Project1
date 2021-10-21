@@ -73,17 +73,12 @@
 					<div class="card-body">
 						<h5 class="card-title">[[${item.pbrand}]]</h5>
 						<p class="card-text">[[${item.pname}]]</p>
-						<p class="card-text">\ [[${item.pprice}]]</p>
+						<p class="card-text">₩ [[${item.pprice}]]</p>
+                        <p class="card-text">[[${item.pstock}]]</p>
 						<!-- 재고계산 -->
-						<p>[[${count}]]</p>
+
 						<th:block th:each="i:${item.pstock}">
 							
-						<th:block th:if="${count &lt; 1}">
-							<p class="text-secondary">SOLD OUT</p>
-						</th:if>
-						<th:block th:if="${count &gt; 0 && count &lt; 10}">
-							<p class="text-secondary">BEST</p>
-						</th:block>
 					</div>
 				</div>
 				<!-- 상품 Modal-->
@@ -100,47 +95,7 @@
 								</div>
 								<div class="" style="max-width: 100%;">
 									<!-- 상품 Modal - Carousel -->
-									<div style="max-width: fit-content;">
-										<div th:id="|carouselExampleIndicators${status.index}|"
-											class="carousel slide" data-bs-ride="carousel"
-											data-bs-interval="false">
-											<div class="carousel-indicators">
-												<button type="button"
-													th:data-bs-target="|#carouselExampleIndicators${status.index}|"
-													data-bs-slide-to="0" class="active" aria-current="true"
-													aria-label="Slide 1"></button>
-												<button type="button"
-													data-bs-target="|#carouselExampleIndicators${status.index}|"
-													data-bs-slide-to="1" aria-label="Slide 2"></button>
-												<button type="button"
-													data-bs-target="|#carouselExampleIndicators${status.index}|"
-													data-bs-slide-to="2" aria-label="Slide 3"></button>
-											</div>
-											<div class="carousel-inner">
-											<div class="carousel-item active">
-												<!-- 129 line 144 line -->
-											</div>
-											<div class="carousel-item">
-												<!-- 146 line 161 line -->
-											</div>
-											<div class="carousel-item">
-												<!--  164 line 178 line-->
-											</div>
-										</div>
-											<button class="carousel-control-prev" type="button"
-												data-bs-target="#carouselExampleIndicators${status.index}"
-												data-bs-slide="prev">
-												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-												<span class="visually-hidden">Previous</span>
-											</button>
-											<button class="carousel-control-next" type="button"
-												data-bs-target="#carouselExampleIndicators${status.index}"
-												data-bs-slide="next">
-												<span class="carousel-control-next-icon" aria-hidden="true"></span>
-												<span class="visually-hidden">Next</span>
-											</button>
-										</div>
-									</div>		
+                                      <img alt="" th:src="${item.pimage1TreeSet[0]}" style="max-width: 100%;">		
 									<!-- Color 선택 -->
 									<form action="put" method="post" >
 										<input type="text" id="pcode" name="pcode"
@@ -179,8 +134,8 @@
 											</div>
 											<!-- 색상 이미지 -->
 											<div class="d-flex justify-content-end mb-2">
-											
-													<img alt="" th:src="${item.pcolorimageTreeSet[0]}" class="mx-3"
+                                            <th:block th:each ="i:${item.pcolorimageTreeSet}">
+													<img alt="" th:src="${i}" class="mx-3"
 														style="width: 24px; height: 24px;">
 											</div>
 											<!-- Size 선택 -->
@@ -195,12 +150,12 @@
 																	th:id="|sizeId${status.index}sep${isstatus.index}|"
 																	th:value="${i}"
 																	checked>
-															</th:if>
-															<th:if test="${isstatus.index > 0}">
+															</th:block>
+															<th:block th:if="${isstatus.index > 0}">
 																<input class="form-check-input" type="radio" name="size"
 																	th:id="|sizeId${status.index}sep${isstatus.index}|"
 																	th:value="${i}">
-															</th:if>
+															</th:block>
 															<label class="form-check-label"
 																th:for="|sizeId${status.index}sep${isstatus.index}|">
 																[[${i}]]
@@ -209,16 +164,15 @@
 													</th:block>
 												</div>
 											</div>
-											<input type="text" name="quantity" class="form-control"
-												value="1" style="display: block;"> 
-												<input type="text"
-												name="price" class="form-control" th:value="${item.pprice}"
-												style="display: none;">
+
 											<!-- 수량 선택 -->
 											<div class="d-flex justify-content-between">
 												<h6 style="margin-top: 8px;">Quantity</h6>
 												<div class="d-flex">
-													
+											    <input type="text" name="quantity" class="form-control ms-5"
+												       value="1" style="display: block;"> 
+												<input type="text" name="price" class="form-control" th:value="${item.pprice}"
+												       style="display: none;">
 												</div>
 											</div>
 											<hr class="my-2">
@@ -226,7 +180,7 @@
 											<div class="d-flex justify-content-between">
 												<h5 class="card-title">Total</h5>
 												<div class="d-flex">
-													<h5>\</h5>
+													<h5>₩</h5>
 													<h5 class="card-title ms-3" th:id="|totalId${status.index}|">[[${item.pprice}]]</h5>
 													<h5 th:id="|tempId${status.index}|" style="display: none;">[[${item.pprice}]]</h5>
 												</div>
