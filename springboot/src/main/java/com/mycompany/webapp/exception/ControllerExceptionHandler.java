@@ -18,7 +18,7 @@ public class ControllerExceptionHandler {
 	public String handleNotAuthenticatedUserException(NotAuthenticatedUserException e) {
 		log.info("로그인 되지 않은 유저");
 		e.printStackTrace();
-		return "redirect:/member/loginForm";
+		return "redirect:/security/loginForm";
 	}
 	
 	@ExceptionHandler
@@ -37,13 +37,6 @@ public class ControllerExceptionHandler {
 	}
 	
 	@ExceptionHandler
-	public String handleForbiddenException(ForbiddenException e) { 
-		log.info("handleForbiddenException 실행");
-		e.printStackTrace();
-		return "error/403";
-	}
-	
-	@ExceptionHandler
 	public String handleNotFoundException(NotFoundException e) { 
 		log.info("handleNotFoundException 실행");
 		e.printStackTrace();
@@ -52,14 +45,14 @@ public class ControllerExceptionHandler {
 	
 	@ExceptionHandler
 	public String handleNullPointerException(NullPointerException e) {
-		log.info("NullPointException");
+		log.info("NullPointException 실행");
 		e.printStackTrace();
 		return "error/500";
 	}
 	
 	@ExceptionHandler
 	public String handleOtherException(Exception e) {
-		log.info("실행");
+		log.info("Exception 실행");
 		e.printStackTrace();
 		return "error/500";
 	}

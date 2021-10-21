@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/**").permitAll();
 		
 		//권한 없음(403)일 경우 이동할 경로 설정
-		http.exceptionHandling().accessDeniedPage("/security/accessDenied");
+		http.exceptionHandling().accessDeniedPage("/security/403");
 		
 		//CSRF(사이트 요청 위조 방지) 비활성화
 		http.csrf().disable();
