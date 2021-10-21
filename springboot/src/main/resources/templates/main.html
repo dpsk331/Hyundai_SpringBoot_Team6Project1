@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<style scoped>
+  #mainBg {
+    z-index: -10;
+    position: absolute;
+    width: 67vw;
+  }
+</style>
+<body>
   <th:block th:replace="~{common/layout::setContent(~{this::content})}">
     <th:block th:fragment="content">
     
       <div class="d-flex justify-content-center">
         <div class="col-8">
-          
+          <img alt="mainBackgroundImage" src="/images/bg_2.jpg" id="mainBg" class="mb-5">
+            <div class="ms-5" style="margin-top: 22vh; margin-bottom: 11vh;">
+              <h1 class="mb-4">| LIGHT LUXE |</h1>
+              <h5>OZ-SECOND Collection with Actress Eunse Kee</h5>
+              <h5>WE 21FW Coupon Event</h5>
+              <!-- 로그인 유저 페이지 정상적으로 이동 -->
+              <div sec:authorize="isAuthenticated()">
+              <div class="mt-5">
+                <a href="/list/view"><div class="btn btn-outline-dark col-2 mt-5">SHOP NOW</div></a>
+                <a href="/event2/page"><div class="btn btn-dark col-2 mt-5">EVENT</div></a>
+              </div>
+              </div>
+              <!-- 로그인 하지 않았다면 로그인 창으로 보내준다. -->
+              <div sec:authorize="!isAuthenticated()">
+              <div class="mt-5">
+                <a th:href="@{/security/loginForm}"><div class="btn btn-outline-dark col-2 mt-5">SHOP NOW</div></a>
+                <a th:href="@{/security/loginForm}"><div class="btn btn-dark col-2 mt-5">EVENT</div></a>
+              </div>
+              </div>
+            </div>         
         </div>
       </div>
       
     </th:block>
   </th:block>
-  
+</body>
 </html>

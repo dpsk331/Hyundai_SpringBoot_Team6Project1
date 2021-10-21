@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-  <th:block th:replace="~{common/layout::setContent(~{this::content})}">
-    <th:block th:fragment="content">
-
-		<div class="d-flex justify-content-center">
-		  <div class="col-8">
-		  
-		  </div>
-		</div>    
+  <th:block th:fragment="setContent(content)">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>THE HANDSOME</title>
+      <!-- 부트스트랩 CSS CDN -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+      <!-- jquery CDN -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <!-- 부트스트랩 JS CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+	  <!-- 폰트 -->
+	  <style>
+        @font-face {
+            font-family: 'IBMPlexSansKR-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+          font-family: 'IBMPlexSansKR-Regular';
+        }   
+		a {
+		  cursor: pointer;
+		} 	
+	  </style>
+    </head>
+    
+    <body>
+ 
       
-    </th:block>
-  </th:block>
+      <div>
+        <!-- ############################################### -->
+        <th:block th:replace="${content}"></th:block>
+        <!-- ############################################### -->
+      </div>
+      
+  
+    </body>
   
 </html>
