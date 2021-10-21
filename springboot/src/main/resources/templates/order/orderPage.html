@@ -232,20 +232,20 @@
       </div>
 
       <script th:inline="javascript">
-       /* 약관동의여부 체크 */
-       function checkAgreement() {
-         const isChecked = document.getElementById("flexCheckDefault").checked;
-         const able = document.getElementById("ableButton");
-         const disable = document.getElementById("disableButton");
-    
-         if (isChecked == true) {
-           able.style.display = "block";
+        /* 약관동의여부 체크 */
+        function checkAgreement() {
+          const isChecked = document.getElementById("flexCheckDefault").checked;
+          const able = document.getElementById("ableButton");
+          const disable = document.getElementById("disableButton");
+
+          if (isChecked == true) {
+            able.style.display = "block";
           disable.style.display = "none";
-         } else if (isChecked == false) {
+          } else if (isChecked == false) {
           able.style.display = "none";
           disable.style.display = "block";
-         }
-       }
+          }
+        }
       </script>
   
     </th:block>

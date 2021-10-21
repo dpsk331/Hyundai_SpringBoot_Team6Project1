@@ -34,11 +34,11 @@ public class SecurityController {
 		return "security/loginForm";
 	}
 	
-	@RequestMapping("/accessDenied")
+	@RequestMapping("/403")
 	public String accessDenied() {
 		log.info("Run");
 		
-		return "security/accessDenied";
+		return "error/403";
 	}
 	
 	@RequestMapping("/admin/action")

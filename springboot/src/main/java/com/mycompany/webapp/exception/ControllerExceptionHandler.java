@@ -1,51 +1,58 @@
 package com.mycompany.webapp.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import lombok.extern.slf4j.Slf4j;
+
 //객체로 생성해서 관리하도록 설정
 @Component
 //모든 컨트롤러에 영향을 미치는 설정
 @ControllerAdvice
+@Slf4j
 public class ControllerExceptionHandler {
-	private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 	
 	@ExceptionHandler
 	public String handleNotAuthenticatedUserException(NotAuthenticatedUserException e) {
-		logger.info("로그인 되지 않은 유저");
+		log.info("로그인 되지 않은 유저");
 		e.printStackTrace();
-		return "redirect:/member/loginForm";
+		return "redirect:/security/loginForm";
 	}
 	
 	@ExceptionHandler
 	public String OutOfStockException(OutOfStockExceptionHandler e, Model model) {
-		logger.info("Run / OutOfStockException");
+		log.info("Run / OutOfStockException");
 		e.printStackTrace();
 		model.addAttribute("message", e.getMessage());
 		return "error/OutOfStockException";
 	}
 
 	@ExceptionHandler
-	public String handleNotAuthenticatedUserRequestException(UnauthorizedException e) { 
-		logger.info("handleNotAuthenticatedUserRequestException 실행");
+	public String handleUnauthorizedException(UnauthorizedException e) { 
+		log.info("handleUnauthorizedException 실행");
 		e.printStackTrace();
 		return "error/401";
 	}
 	
 	@ExceptionHandler
+	public String handleNotFoundException(NotFoundException e) { 
+		log.info("handleNotFoundException 실행");
+		e.printStackTrace();
+		return "error/404";
+	}
+	
+	@ExceptionHandler
 	public String handleNullPointerException(NullPointerException e) {
-		logger.info("NullPointException");
+		log.info("NullPointException 실행");
 		e.printStackTrace();
 		return "error/500";
 	}
 	
 	@ExceptionHandler
 	public String handleOtherException(Exception e) {
-		logger.info("실행");
+		log.info("Exception 실행");
 		e.printStackTrace();
 		return "error/500";
 	}
