@@ -8,22 +8,22 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>THE HANDSOME</title>
-      <!-- 부트스트랩 CSS CDN -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
       <!-- jquery CDN -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <!-- 부트스트랩 CSS CDN -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
       <!-- 부트스트랩 JS CDN -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 	  <!-- 폰트 -->
 	  <style>
         @font-face {
-          font-family: 'NanumBarunpen';
-          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumBarunpen.woff') format('woff');
-          font-weight: normal;
-          font-style: normal;
+            font-family: 'IBMPlexSansKR-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
         }
         body {
-          font-family: 'NanumBarunpen';
+          font-family: 'IBMPlexSansKR-Regular';
         }   
 		a {
 		  cursor: pointer;
@@ -73,22 +73,21 @@
                 <div sec:authorize="isAuthenticated()">
                   <form method="post" action="@{/logout}" class="d-flex">
                     <!-- 쇼핑백/수량-->
-                    <a href="@{/cart/list}" class="text-decoration-none text-dark ms-3">
+                    <a href="/cart/list" class="text-decoration-none text-dark ms-3">
                       <img src="/images/shopping-bag.svg" style="width: 24px;" alt="">
                     </a>              
-                    <div style="margin-top: 4px;">[[${shoppingbagcount}]]</div>
+                    <div id="shoppingbagcount" style="margin-top: 4px;"></div>
                     <!-- 쿠폰/수량 -->
                     <a th:href="@{/mypage}" class="text-decoration-none text-dark ms-2">
                       <img src="/images/gift1.png" style="width: 24px;" alt="">
                     </a>
-                    <div style="margin-top: 4px;">[[${couponcount}]]</div> 
+                    <div id="couponcount" style="margin-top: 4px;"></div> 
                     <!-- Dropdown Button -->
                     <div class="dropdown">
                       <a class="btn dropdown-toggle fs-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">[[${#authentication.name}]]</a>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" th:href="@{/mypage}">마이페이지</a></li>
-                        <li><a class="dropdown-item" th:href="@{/event1/page}">이벤트 1</a></li>
-                        <li><a class="dropdown-item" th:href="@{/event2/page}">이벤트 2</a></li>
+                        <li><a class="dropdown-item" th:href="@{/event2/page}">이벤트</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
                       </ul>
                     </div>      
@@ -104,13 +103,13 @@
         window.onload = function() {
           // 쇼핑백에 담겨있는 수량표시
           $.ajax({
-            url: "${pageContext.request.contextPath}/cart/count"
+            url: "/cart/count"
           }) .done((data) => {
             $("#shoppingbagcount").html("<div class=\"\" style=\"text-underline-position:under;\">" + "(" + data + ")" + "</div>")
           })
           // 발급받은 쿠폰 수량표시
           $.ajax({
-            url: "${pageContext.request.contextPath}/couponCount"
+            url: "/couponCount"
           }) .done((data) => {
             $("#couponcount").html("<div class=\"\" style=\"text-underline-position:under;\">" + "(" + data + ")" + "</div>")
           })
@@ -131,12 +130,12 @@
         <footer class="text-dark mt-5 col-8">
           <div class="footer text-center align-middle">
             <a href="/" class="text-decoration-none text-dark"><div class="fs-6 mb-2 fw-bold">| THE | HANDSOME |</div></a>
-            <div class="fs-6 mb-2">🔰Hyundai IT&E 2th Team6 Mini Project 1</div>
+            <div class="fs-6 mb-2">Hyundai IT&E 2th Team6 Mini Project 1-1</div>
             <div class="fs-6 mb-2">
-              <a th:href="@{https://github.com/woongity}" class="text-decoration-none text-dark">🧑🏻Taewoong</a>
-              <a th:href="@{https://github.com/hongsam123}" class="text-decoration-none text-dark">👧🏻Eunsol</a> 
-              <a th:href="@{https://github.com/dpsk331}" class="text-decoration-none text-dark">👩🏻Yena</a> 
-              <a th:href="@{https://github.com/blossom4}" class="text-decoration-none text-dark">👦🏻Youngshin</a>
+              <a th:href="@{https://github.com/woongity}" class="text-decoration-none text-dark">Taewoong.&nbsp;</a>
+              <a th:href="@{https://github.com/hongsam123}" class="text-decoration-none text-dark">Eunsol.&nbsp;</a> 
+              <a th:href="@{https://github.com/dpsk331}" class="text-decoration-none text-dark">Yena.&nbsp;</a> 
+              <a th:href="@{https://github.com/blossom4}" class="text-decoration-none text-dark">Youngshin.&nbsp;</a>
             </div>
             <!-- SNS icons -->
             <div class="d-flex justify-content-center mb-2">
