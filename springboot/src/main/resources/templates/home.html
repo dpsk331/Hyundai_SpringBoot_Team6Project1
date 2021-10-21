@@ -1,20 +1,308 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
+<style scoped>
+.modalFont {
+	font-size: 0.8rem;
+}
 
+.upper-image {
+	transition: opacity 0.8s;
+	opacity: 1;
+}
+
+.upper-image:hover {
+	opacity: 0.3;
+}
+
+.navSticky {
+	position: sticky;
+	top: 600px;
+}
+
+.circle_progress_wrap {
+	width: 120px;
+	height: 120px;
+}
+
+.circle_progress {
+	transform: rotate(-90deg);
+}
+
+.frame, .bar {
+	fill: none;
+}
+
+.frame {
+	stroke: #e6e6e6;
+}
+
+.bar {
+	stroke: black;
+	stroke-linecap: round;
+}
+
+.arrow {
+	position: absolute;
+	left: 38px;
+	right: 0;
+	bottom: 0;
+	top: 13px;
+	color: #888;
+	font-size: 16px;
+	line-height: 120px;
+}
+</style>
   <th:block th:replace="~{common/layout::setContent(~{this::content})}">
     <th:block th:fragment="content">
-    
-      <div class="card m-2">
-        <div class="card-header">
-          Home
-        </div>
-        <div class="card-body">
-          [[${productArray}]]
-        </div>
-      </div>
-      
+    	
+<div class="d-flex justify-content-center">
+	<div class="col-2">
+		<div></div>
+	</div>
+	<div class="col-8">
+		<div class="row">
+			<!-- 전체 상품리스트 -->
+			<th:block th:each="item,status:${productArray}">
+				<th:block th:with = "count=1">
+				<div class="text-center ps-0 pe-1" style="width: 16.8vw;">
+					<a th:id="'getModalBtn'+${status.index}">
+					
+ 					<img th:src="${item.pimage1TreeSet[0]}" class="card-img-top upper-image" id="homeImage1" alt="item">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title">[[${item.pbrand}]]</h5>
+						<p class="card-text">[[${item.pname}]]</p>
+						<p class="card-text">\ [[${item.pprice}]]</p>
+						<!-- 재고계산 -->
+						<p>[[${count}]]</p>
+						<th:block th:each="i:${item.pstock}">
+							
+						<th:block th:if="${count &lt; 1}">
+							<p class="text-secondary">SOLD OUT</p>
+						</th:if>
+						<th:block th:if="${count &gt; 0 && count &lt; 10}">
+							<p class="text-secondary">BEST</p>
+						</th:block>
+					</div>
+				</div>
+				<!-- 상품 Modal-->
+				<th:block th:if="${count>0}">
+					<div class="modal fade" th:id="'getModal'+${status.index}" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-sm" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title fw-bold" id="exampleModalLabel">쇼핑백</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="" style="max-width: 100%;">
+									<!-- 상품 Modal - Carousel -->
+									<div style="max-width: fit-content;">
+										<div th:id="|carouselExampleIndicators${status.index}|"
+											class="carousel slide" data-bs-ride="carousel"
+											data-bs-interval="false">
+											<div class="carousel-indicators">
+												<button type="button"
+													th:data-bs-target="|#carouselExampleIndicators${status.index}|"
+													data-bs-slide-to="0" class="active" aria-current="true"
+													aria-label="Slide 1"></button>
+												<button type="button"
+													data-bs-target="|#carouselExampleIndicators${status.index}|"
+													data-bs-slide-to="1" aria-label="Slide 2"></button>
+												<button type="button"
+													data-bs-target="|#carouselExampleIndicators${status.index}|"
+													data-bs-slide-to="2" aria-label="Slide 3"></button>
+											</div>
+											<div class="carousel-inner">
+											<div class="carousel-item active">
+												<!-- 129 line 144 line -->
+											</div>
+											<div class="carousel-item">
+												<!-- 146 line 161 line -->
+											</div>
+											<div class="carousel-item">
+												<!--  164 line 178 line-->
+											</div>
+										</div>
+											<button class="carousel-control-prev" type="button"
+												data-bs-target="#carouselExampleIndicators${status.index}"
+												data-bs-slide="prev">
+												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+												<span class="visually-hidden">Previous</span>
+											</button>
+											<button class="carousel-control-next" type="button"
+												data-bs-target="#carouselExampleIndicators${status.index}"
+												data-bs-slide="next">
+												<span class="carousel-control-next-icon" aria-hidden="true"></span>
+												<span class="visually-hidden">Next</span>
+											</button>
+										</div>
+									</div>		
+									<!-- Color 선택 -->
+									<form action="put" method="post" >
+										<input type="text" id="pcode" name="pcode"
+											class="form-control" th:value="${item.pcode}"
+											style="display: none;">
+										<div class="card-body">
+											<div class="d-flex justify-content-between">
+												<h6 style="margin-top: 8px;">Color&nbsp;&nbsp;</h6>
+												<div class="d-flex">
+													<th:block th:each ="i,icstatus:${item.pcolorTreeSet}">
+												
+														<div class="form-check me-3">
+														
+															<th:block th:if="${icstatus.index == 0}">
+																<input class="form-check-input" type="radio"
+																	name="color"
+																	id="colorId${status.index}sep${icstatus.index}"
+																	th:value="${i}" checked>
+															</th:block>
+															<th:block th:if="${icstatus.index > 0}">
+																<input class="form-check-input" type="radio"
+																	name="color"
+																	id="colorId${status.index}sep${icstatus.index}"
+																	th:value="${i}">
+															</th:block>
+
+															
+															<label class="form-check-label"
+																th:for="|colorId${status.index}|">
+																<a th:onclick="|changeImage${status.index}sep${icstatus.index}()|">[[${i}]]</a>
+															</label>
+														</div>
+														
+													</th:block>
+												</div>
+											</div>
+											<!-- 색상 이미지 -->
+											<div class="d-flex justify-content-end mb-2">
+											
+													<img alt="" th:src="${item.pcolorimageTreeSet[0]}" class="mx-3"
+														style="width: 24px; height: 24px;">
+											</div>
+											<!-- Size 선택 -->
+											<div class="d-flex justify-content-between">
+												<h6 style="margin-top: 8px;">Size&nbsp;&nbsp;&nbsp;</h6>
+												<div class="d-flex">
+													<th:block th:each="i,isstatus:${item.psizeTreeSet}">
+														
+														<div class="form-check me-3">
+															<th:block th:if="${isstatus.index == 0}">
+																<input class="form-check-input" type="radio" name="size"
+																	th:id="|sizeId${status.index}sep${isstatus.index}|"
+																	th:value="${i}"
+																	checked>
+															</th:if>
+															<th:if test="${isstatus.index > 0}">
+																<input class="form-check-input" type="radio" name="size"
+																	th:id="|sizeId${status.index}sep${isstatus.index}|"
+																	th:value="${i}">
+															</th:if>
+															<label class="form-check-label"
+																th:for="|sizeId${status.index}sep${isstatus.index}|">
+																[[${i}]]
+															</label>
+														</div>
+													</th:block>
+												</div>
+											</div>
+											<input type="text" name="quantity" class="form-control"
+												value="1" style="display: block;"> 
+												<input type="text"
+												name="price" class="form-control" th:value="${item.pprice}"
+												style="display: none;">
+											<!-- 수량 선택 -->
+											<div class="d-flex justify-content-between">
+												<h6 style="margin-top: 8px;">Quantity</h6>
+												<div class="d-flex">
+													
+												</div>
+											</div>
+											<hr class="my-2">
+											<!-- 가격 합계 -->
+											<div class="d-flex justify-content-between">
+												<h5 class="card-title">Total</h5>
+												<div class="d-flex">
+													<h5>\</h5>
+													<h5 class="card-title ms-3" th:id="|totalId${status.index}|">[[${item.pprice}]]</h5>
+													<h5 th:id="|tempId${status.index}|" style="display: none;">[[${item.pprice}]]</h5>
+												</div>
+											</div>
+											<hr class="my-2">
+											<div class="d-flex justify-content-center mt-2">
+												<input class="btn btn-dark btn-sm col-6"
+													data-bs-dismiss="modal" value="쇼핑백 담기" type="submit">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script>
+				// Modal창 관리
+				$('#getModalBtn[[${status.index}]]').click(function(e){
+				e.preventDefault();
+				$('#getModal[[${status.index}]]').modal("show");
+				});
+					
+				</script>
+				</th:block>
+			</th:block>
+			</th:block>
+		</div>
+	</div>
+	<div class="d-flex justify-content-center col-2">
+		<div class="circle_progress_wrap navSticky">
+			<img alt=""
+				src="${/images/github.svg}"
+				class="arrow">
+			<svg class="circle_progress" width="60" height="60"
+				viewBox="0 0 120 120" style="cursor: pointer; margin-left: 24px;"
+				onclick="window.scrollTo(0,0);">
+		    <circle class="frame" cx="60" cy="60" r="54" stroke-width="6" />
+		    <circle class="bar" cx="60" cy="60" r="54" stroke-width="6" />
+		  </svg>
+			<strong class="value" id="control"></strong>
+		</div>
+	</div>
+	
+	<script>     
+      var control = document.getElementById('control');
+			var bar = document.querySelector('.bar');
+			var value = document.querySelector('.value');
+			var RADIUS = 54;
+			var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+			
+			function progress(per) {
+			  var progress = per / 100;
+			  var dashoffset = CIRCUMFERENCE * (1 - progress);
+			  
+			  value.innerHTML=per +'%';
+			  bar.style.strokeDashoffset = dashoffset;
+			}
+			
+			document.addEventListener('scroll', function(event) {
+        const scrollTop = document.documentElement.scrollTop
+        const scrollHeight = document.documentElement.scrollHeight
+        let position = Math.ceil((scrollTop / scrollHeight) * (100 * (10 / 8.9)))
+        
+        if (position > 100) position = 100
+        
+			  progress(position);
+			});
+			control.addEventListener('change', function(event){
+			  progress(event.target.valueAsNumber);
+			});
+
+			bar.style.strokeDasharray = CIRCUMFERENCE;
+			progress(0);
+			
+		</script>
+	</div>
     </th:block>
   </th:block>
-  
 </html>
