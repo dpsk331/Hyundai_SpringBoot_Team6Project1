@@ -64,7 +64,7 @@
                 <div sec:authorize="isAuthenticated()">
                   <form method="post" action="@{/logout}" class="d-flex">
                     <!-- 쇼핑백/수량-->
-                    <a href="@{/cart/list}" class="text-decoration-none text-dark ms-3">
+                    <a th:href="@{/cart/list}" class="text-decoration-none text-dark ms-3">
                       <img src="/images/shopping-bag.svg" style="width: 24px;" alt="">
                     </a>              
                     <div style="margin-top: 4px;">[[${shoppingbagcount}]]</div>
