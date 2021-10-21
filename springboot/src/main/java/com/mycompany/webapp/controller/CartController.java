@@ -27,10 +27,12 @@ import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.service.CartitemService;
 import com.mycompany.webapp.service.ListviewService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 @RequestMapping("/cart")
 public class CartController {
-	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 	
 	@Resource
 	CartitemService cartService;
@@ -40,7 +42,7 @@ public class CartController {
 	@LoginChecking
 	@GetMapping("/list")
 	public String list(Principal principal, Model model) {
-		logger.info("Run cart/list");
+		log.info("Run cart/list");
 		
 		List<Cartitem> cartitems = cartService.selectAllByMid(principal.getName());
 		
@@ -93,7 +95,7 @@ public class CartController {
 	@LoginChecking401
 	@RequestMapping("/option")
 	public String option(String pcode,String origin_pcolor,String origin_psize, String new_pcolor, String new_psize, String new_pquantity) {
-		logger.info("Run cart/option");
+		log.info("Run cart/option");
 		//기존 카트 아이템 코드, 컬러, 사이즈를 받고 기존 카트 아이템 삭제, 
 		//새로운 카트 아이템 insert
 		//에서 기존 상품 update로 변경
@@ -111,7 +113,7 @@ public class CartController {
 	@LoginChecking401
 	@RequestMapping("/deleteitem")
 	public String deleteitem(String pcode,String pcolor, String psize) {
-		logger.info("Run cart/delete");
+		log.info("Run cart/delete");
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String mid = authentication.getName();
