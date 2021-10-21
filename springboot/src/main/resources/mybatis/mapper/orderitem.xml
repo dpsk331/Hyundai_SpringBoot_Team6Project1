@@ -30,7 +30,7 @@
         inner join 
             orderinfo ord
         on o.oid = ord.oid
-        where ord.mid = #{mid} and to_date(otime,'YYYY-MM-DD HH24:MI:SS') between to_date(#{fromtime},'YYYY-MM-DD') and to_date(#{totime},'YYYY-MM-DD')
+        where ord.mid = #{mid} and to_date(otime,'YYYY-MM-DD HH24:MI:SS') between to_date(#{fromtime},'YYYY-MM-DD') and to_date(#{totime},'YYYY-MM-DD') + 1
         order by ord.otime desc
    </select>
 </mapper>
