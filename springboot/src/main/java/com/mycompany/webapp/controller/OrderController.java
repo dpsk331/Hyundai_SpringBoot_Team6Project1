@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mycompany.webapp.aspect.LoginChecking401;
 import com.mycompany.webapp.dto.CartitemJoinProduct;
 import com.mycompany.webapp.dto.Member;
 import com.mycompany.webapp.dto.Order;
@@ -50,44 +51,45 @@ public class OrderController {
 	private ListviewService productService;
 
 	// 장바구니에서 선택한 상품 주문하기
+	@LoginChecking401
 	@RequestMapping("/orderPage")
-//	public String orderPage(
-//			@RequestParam(value="orderPcode") ArrayList<String> orderPcode,
-//			@RequestParam(value="orderPimage1") ArrayList<String> orderPimage1,
-//			@RequestParam(value="orderPcolorimage") ArrayList<String> orderPcolorimage,
-//			@RequestParam(value="orderPbrand") ArrayList<String> orderPbrand,
-//			@RequestParam(value="orderPname") ArrayList<String> orderPname,
-//			@RequestParam(value="orderPcolor") ArrayList<String> orderPcolor,
-//			@RequestParam(value="orderPsize") ArrayList<String> orderPsize,
-//			@RequestParam(value="orderPprice") ArrayList<Integer> orderPprice,
-//			@RequestParam(value="orderPquantity") ArrayList<Integer> orderPquantity,
-//			@RequestParam(value="isSelected") ArrayList<Integer> isSelected, //0:선택x, 1:선택
 	public String orderPage(
+			@RequestParam(value="orderPcode") ArrayList<String> orderPcode,
+			@RequestParam(value="orderPimage1") ArrayList<String> orderPimage1,
+			@RequestParam(value="orderPcolorimage") ArrayList<String> orderPcolorimage,
+			@RequestParam(value="orderPbrand") ArrayList<String> orderPbrand,
+			@RequestParam(value="orderPname") ArrayList<String> orderPname,
+			@RequestParam(value="orderPcolor") ArrayList<String> orderPcolor,
+			@RequestParam(value="orderPsize") ArrayList<String> orderPsize,
+			@RequestParam(value="orderPprice") ArrayList<Integer> orderPprice,
+			@RequestParam(value="orderPquantity") ArrayList<Integer> orderPquantity,
+			@RequestParam(value="isSelected") ArrayList<Integer> isSelected, //0:선택x, 1:선택
+//	public String orderPage(
 			Model model,
 			HttpServletResponse response) throws Exception {
 		log.info("Run order/orderPage");
 		
 		//테스트
-		ArrayList<String> orderPcode = new ArrayList<>();
-		orderPcode.add("CM2B0KCD230W");
-		ArrayList<String> orderPimage1 = new ArrayList<>();
-		orderPimage1.add("http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_W01.jpg/dims/resize/684x1032/");
-		ArrayList<String> orderPcolorimage = new ArrayList<>();
-		orderPcolorimage.add("http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_C01.jpg");
-		ArrayList<String> orderPbrand = new ArrayList<>();
-		orderPbrand.add("the CASHMERE");
-		ArrayList<String> orderPname = new ArrayList<>();
-		orderPname.add("캐시미어 크롭 니트 가디건");
-		ArrayList<String> orderPcolor = new ArrayList<>();
-		orderPcolor.add("PK");
-		ArrayList<String> orderPsize = new ArrayList<>();
-		orderPsize.add("85");
-		ArrayList<Integer> orderPprice = new ArrayList<>();
-		orderPprice.add(495000);
-		ArrayList<Integer> orderPquantity = new ArrayList<>();
-		orderPquantity.add(1);
-		ArrayList<Integer> isSelected = new ArrayList<>();
-		isSelected.add(1);
+//		ArrayList<String> orderPcode = new ArrayList<>();
+//		orderPcode.add("CM2B0KCD230W");
+//		ArrayList<String> orderPimage1 = new ArrayList<>();
+//		orderPimage1.add("http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_W01.jpg/dims/resize/684x1032/");
+//		ArrayList<String> orderPcolorimage = new ArrayList<>();
+//		orderPcolorimage.add("http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_C01.jpg");
+//		ArrayList<String> orderPbrand = new ArrayList<>();
+//		orderPbrand.add("the CASHMERE");
+//		ArrayList<String> orderPname = new ArrayList<>();
+//		orderPname.add("캐시미어 크롭 니트 가디건");
+//		ArrayList<String> orderPcolor = new ArrayList<>();
+//		orderPcolor.add("PK");
+//		ArrayList<String> orderPsize = new ArrayList<>();
+//		orderPsize.add("85");
+//		ArrayList<Integer> orderPprice = new ArrayList<>();
+//		orderPprice.add(495000);
+//		ArrayList<Integer> orderPquantity = new ArrayList<>();
+//		orderPquantity.add(1);
+//		ArrayList<Integer> isSelected = new ArrayList<>();
+//		isSelected.add(1);
 
 		//mid 정보 가져오기
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -126,6 +128,7 @@ public class OrderController {
 	}
 
 	// 주문페이지에서 주문완료하기(DB 저장)
+	@LoginChecking401
 	@PostMapping("/orderComplete")
 	public String orderComplete(@RequestParam(value="pcode") ArrayList<String> pcode, 
 								@RequestParam(value="pcolor") ArrayList<String> pcolor, 
@@ -158,6 +161,7 @@ public class OrderController {
   }
 	
 	// 주문페이지에서 주문완료하기(뷰 데이터 전송)
+	@LoginChecking401
 	@GetMapping("/redirectOrderComplete")
 	public String orderComplete(HttpSession session, Model model) {
 		log.info("Run order/redirectOrderComplete");
@@ -195,6 +199,7 @@ public class OrderController {
 		return "order/orderComplete";
   }
   
+	@LoginChecking401
 	@RequestMapping("/delete")
 	public String delete(String oid) {
 		log.info("Run order/delete");
